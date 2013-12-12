@@ -1,0 +1,40 @@
+<HTML>
+    <HEAD>
+        <script type="text/javascript">
+            function GetRSSNews(){
+                
+                var iMax = 6
+                
+                var rssDoc = new ActiveXObject("Microsoft.XMLDOM")
+                rssDoc.async = false
+                rssDoc.load("http://www.fcf.net/fcfconline/fcfcmobile/RSS/Events_RSS.rss")
+                            
+                            var headNode = rssDoc.selectNodes("/rss/channel")
+                            var itemNodes = rssDoc.selectNodes("/rss/channel/item")
+                            
+                            if(itemNodes.length<iMax){
+                                iMax = itemNodes.length
+                            }
+                            
+                            var feedBody = ""
+                            
+                            for(i=0;i<iMax;i++){
+                                feedBody = feedBody + "<p><a href='" + itemNodes.item(i).getElementsByTagName("link").item(0).text + "'>" + itemNodes.item(i).getElementsByTagName("title").item(0).text + "</a></p>"
+                            }
+                            
+                            myFeeds.innerHTML  = feedBody
+                            
+                            
+                            
+                            
+                            Ads by Google
+                            
+                            myChannel.innerText = headNode.item(0).getElementsByTagName("title").item(0).text
+            }
+        </script>
+    </HEAD>
+    <BODY onload="GetRSSNews()">
+        <div id="myChannel"></div>
+        <div id="myFeeds"></div>
+    </BODY>
+</HTML>
